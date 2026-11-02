@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+  
+  </style>
+</head>
+<body>
+
+  <!-- Mobile Backdrop -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <!-- Sidebar -->
+  <aside id="sidebar-wrapper">
+    <div class="brand-logo justify-content-between">
+      <div class="d-flex align-items-center gap-2">
+        <div class="brand-icon-box">
+          <i class="bi bi-gem"></i>
+        </div>
+        <span class="fs-5 fw-bold text-emphasis">FLO<span style="color: var(--primary-teal);">W</span></span>
+      </div>
+      <button class="btn btn-sm d-lg-none text-muted" id="sidebarCloseBtn">
+        <i class="bi bi-x-lg fs-5"></i>
+      </button>
+    </div>
+
+    <div class="sidebar-menu">
+      <div class="nav-label">Main Menu</div>
+      <a href="#" class="sidebar-link active" data-section="overview">
+        <i class="bi bi-grid-1x2-fill"></i>
+        <span>Overview</span>
+      </a>
+      <a href="#" class="sidebar-link" data-section="analytics">
+        <i class="bi bi-graph-up-arrow"></i>
+        <span>Analytics</span>
+      </a>
+      <a href="#" class="sidebar-link" data-section="orders">
+        <i class="bi bi-cart3"></i>
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <span>Orders</span>
+          <span class="badge bg-teal-soft text-teal rounded-pill px-2">12</span>
+        </div>
+      </a>
+      <a href="#" class="sidebar-link" data-section="users">
+        <i class="bi bi-people"></i>
+        <span>Users</span>
+      </a>
+      <a href="#" class="sidebar-link" data-section="products">
+        <i class="bi bi-box-seam"></i>
+        <span>Products</span>
+      </a>
+
+      <div class="nav-label mt-4">Settings & System</div>
+      <a href="#" class="sidebar-link" data-section="reports">
+        <i class="bi bi-file-earmark-bar-graph"></i>
+        <span>Reports</span>
+      </a>
+      <a href="#" class="sidebar-link" data-section="settings">
+        <i class="bi bi-gear"></i>
+        <span>Settings</span>
+      </a>
+      <a href="#" class="sidebar-link text-danger mt-3" id="logoutBtn">
+        <i class="bi bi-box-arrow-right text-danger"></i>
+        <span>Sign Out</span>
+      </a>
+    </div>
+
+    <!-- Upgrade Card in Sidebar -->
+    <div class="p-3 mx-3 my-4 rounded-3 text-center" style="background-color: var(--teal-light); border: 1px dashed var(--teal-accent);">
+      <i class="bi bi-lightning-charge-fill fs-3" style="color: var(--primary-teal);"></i>
+      <h6 class="fw-bold mb-1 mt-2 text-emphasis">Pro Plan</h6>
+      <p class="text-muted small mb-3">Gain access to automated exports & analytics</p>
+      <button class="btn btn-teal btn-sm w-100 shadow-sm">Upgrade Now</button>
+    </div>
+  </aside>
+
+  <!-- Page Content Container -->
+  <div id="page-content-wrapper">
+    
+    <!-- Top Navbar -->
+    <nav class="top-navbar d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-3">
+        <button class="btn btn-light icon-btn" id="sidebarToggle" title="Toggle Sidebar">
+          <i class="bi bi-list fs-5"></i>
+        </button>
+        <!-- Search bar -->
+        <div class="search-input-group d-none d-md-flex align-items-center gap-2">
+          <i class="bi bi-search text-muted"></i>
+          <input type="text" class="search-input" id="globalSearch" placeholder="Search orders, clients, SKU...">
+        </div>
+      </div>
+
+      <!-- Quick Actions, Notifications, Theme Toggle, Profile -->
+      <div class="d-flex align-items-center gap-2 sm:gap-3">
+        
+        <!-- Dark / Light Mode Toggle Button -->
+        <button class="btn icon-btn" id="themeToggleBtn" title="Toggle Dark/Light Mode" aria-label="Toggle theme">
+          <i class="bi bi-moon-stars" id="themeIcon"></i>
+        </button>
+
+        <button class="btn icon-btn" title="Create Report">
+          <i class="bi bi-plus-lg"></i>
+        </button>
+        
+        <!-- Notifications Dropdown -->
+        <div class="dropdown">
+          <button class="btn icon-btn" data-bs-toggle="dropdown" aria-expanded="false" title="Notifications">
+            <i class="bi bi-bell"></i>
+            <span class="indicator-badge"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm border py-2 mt-2" style="width: 300px;">
+            <li class="px-3 py-2 border-bottom d-flex justify-content-between align-items-center">
+              <span class="fw-bold small">Notifications</span>
+              <span class="badge bg-teal-soft" style="color: var(--primary-teal);">3 Unread</span>
+            </li>
+            <li>
+              <a class="dropdown-item py-2 d-flex align-items-center gap-3" href="#">
+                <span class="badge rounded-circle p-2 bg-success text-white"><i class="bi bi-check2"></i></span>
+                <div>
+                  <p class="mb-0 small fw-medium">Order #4092 completed</p>
+                  <small class="text-muted">10 mins ago</small>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item py-2 d-flex align-items-center gap-3" href="#">
+                <span class="badge rounded-circle p-2 text-white" style="background-color: var(--primary-teal);"><i class="bi bi-person-plus"></i></span>
+                <div>
+                  <p class="mb-0 small fw-medium">New customer joined</p>
+                  <small class="text-muted">45 mins ago</small>
+                </div>
+              </a>
+            </li>
+            <li><hr class="dropdown-divider my-1"></li>
+            <li><a class="dropdown-item text-center small text-primary fw-medium" href="#">View all alerts</a></li>
+          </ul>
+        </div>
+
+        <!-- User Profile Avatar & Menu -->
+        <div class="dropdown ps-2">
+          <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle gap-2" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100&h=100" class="avatar-sm rounded-circle border" alt="Profile" onerror="this.src='https://placehold.co/40x40/0d9488/white?text=EM'">
+            <div class="d-none d-lg-block text-start">
+              <div class="small fw-bold text-emphasis lh-1">Elena Martinez</div>
+              <small class="text-muted">Administrator</small>
+            </div>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm border mt-2">
+            <li><h6 class="dropdown-header">Signed in as Elena</h6></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>My Profile</a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-sliders me-2"></i>Preferences</a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-shield-check me-2"></i>Security</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="p-3 p-md-4">
+      
+      <!-- Greeting and Header Actions -->
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+        <div>
+          <h4 class="fw-bold mb-1 text-emphasis">Executive Overview</h4>
+          <p class="text-muted small mb-0">Real-time store performance and system metrics.</p>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-outline-secondary btn-sm active" id="btn7D">7 Days</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" id="btn30D">30 Days</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" id="btn1Y">1 Year</button>
+          </div>
+          <button class="btn btn-teal btn-sm d-flex align-items-center gap-1" id="exportBtn">
+            <i class="bi bi-download"></i>
+            <span>Export Report</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Stat Cards Grid -->
+      <div class="row g-3 g-xl-4 mb-4">
+        <!-- Revenue Card -->
+        <div class="col-12 col-sm-6 col-xl-3">
+          <div class="card card-custom p-3 h-100">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <span class="text-muted small fw-semibold">Total Revenue</span>
+              <div class="stat-icon" style="background-color: var(--teal-light); color: var(--primary-teal);">
+                <i class="bi bi-currency-dollar"></i>
+              </div>
+            </div>
+            <h3 class="fw-bold mb-2 text-emphasis" id="statRevenue">$84,392.50</h3>
+            <div class="d-flex align-items-center gap-2">
+              <span class="stat-badge badge-success-soft">
+                <i class="bi bi-arrow-up-right"></i> +14.8%
+              </span>
+              <span class="text-muted small">vs last month</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Orders Card -->
+        <div class="col-12 col-sm-6 col-xl-3">
+          <div class="card card-custom p-3 h-100">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <span class="text-muted small fw-semibold">Total Orders</span>
+              <div class="stat-icon" style="background-color: var(--teal-light); color: #0891b2;">
+                <i class="bi bi-bag-check"></i>
+              </div>
+            </div>
+            <h3 class="fw-bold mb-2 text-emphasis" id="statOrders">2,410</h3>
+            <div class="d-flex align-items-center gap-2">
+              <span class="stat-badge badge-success-soft">
+                <i class="bi bi-arrow-up-right"></i> +8.2%
+              </span>
+              <span class="text-muted small">vs last month</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Users Card -->
+        <div class="col-12 col-sm-6 col-xl-3">
+          <div class="card card-custom p-3 h-100">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <span class="text-muted small fw-semibold">Active Customers</span>
+              <div class="stat-icon" style="background-color: rgba(16, 185, 129, 0.12); color: #10b981;">
+                <i class="bi bi-people"></i>
+              </div>
+            </div>
+            <h3 class="fw-bold mb-2 text-emphasis" id="statCustomers">12,680</h3>
+            <div class="d-flex align-items-center gap-2">
+              <span class="stat-badge badge-danger-soft">
+                <i class="bi bi-arrow-down-right"></i> -2.4%
+              </span>
+              <span class="text-muted small">vs last month</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Conversion Rate Card -->
+        <div class="col-12 col-sm-6 col-xl-3">
+          <div class="card card-custom p-3 h-100">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <span class="text-muted small fw-semibold">Conversion Rate</span>
+              <div class="stat-icon" style="background-color: rgba(245, 158, 11, 0.12); color: #f59e0b;">
+                <i class="bi bi-pie-chart"></i>
+              </div>
+            </div>
+            <h3 class="fw-bold mb-2 text-emphasis" id="statConversion">3.64%</h3>
+            <div class="d-flex align-items-center gap-2">
+              <span class="stat-badge badge-success-soft">
+                <i class="bi bi-arrow-up-right"></i> +0.6%
+              </span>
+              <span class="text-muted small">vs target rate</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="row g-3 g-xl-4 mb-4">
+        <!-- Revenue Bar/Line Chart -->
+        <div class="col-12 col-xl-8">
+          <div class="card card-custom p-3 p-md-4 h-100">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+              <div>
+                <h6 class="fw-bold text-emphasis mb-1">Financial Performance</h6>
+                <p class="text-muted small mb-0">Overview of Monthly Revenue & Inflow</p>
+              </div>
+              <div class="dropdown">
+                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                  Year 2026
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" href="#">Year 2026</a></li>
+                  <li><a class="dropdown-item" href="#">Year 2025</a></li>
+                </ul>
+              </div>
+            </div>
+            <div style="position: relative; height: 310px; width: 100%;">
+              <canvas id="revenueChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Traffic Breakdown Doughnut -->
+        <div class="col-12 col-xl-4">
+          <div class="card card-custom p-3 p-md-4 h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <h6 class="fw-bold text-emphasis mb-1">Sales by Channel</h6>
+                <p class="text-muted small mb-0">Primary customer touchpoints</p>
+              </div>
+              <button class="btn btn-sm icon-btn" title="Refresh Channel Data" id="refreshChannels">
+                <i class="bi bi-arrow-clockwise"></i>
+              </button>
+            </div>
+            <div style="position: relative; height: 230px; width: 100%; display: flex; justify-content: center;">
+              <canvas id="channelChart"></canvas>
+            </div>
+            <div class="mt-3 pt-3 border-top" style="border-color: var(--border-color) !important;">
+              <div class="d-flex justify-content-between small text-muted mb-1">
+                <span><i class="bi bi-circle-fill me-1" style="color: #0d9488;"></i> Direct Store</span>
+                <span class="fw-semibold text-emphasis">52%</span>
+              </div>
+              <div class="d-flex justify-content-between small text-muted mb-1">
+                <span><i class="bi bi-circle-fill me-1" style="color: #14b8a6;"></i> Organic Search</span>
+                <span class="fw-semibold text-emphasis">28%</span>
+              </div>
+              <div class="d-flex justify-content-between small text-muted">
+                <span><i class="bi bi-circle-fill me-1" style="color: #99f6e4;"></i> Social Media</span>
+                <span class="fw-semibold text-emphasis">20%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Transactions Table & Quick User Activity -->
+      <div class="row g-3 g-xl-4">
+        <!-- Orders Table -->
+        <div class="col-12 col-xl-8">
+          <div class="card card-custom">
+            <div class="p-3 p-md-4 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2" style="border-color: var(--border-color) !important;">
+              <div>
+                <h6 class="fw-bold text-emphasis mb-1">Recent Transactions</h6>
+                <p class="text-muted small mb-0">Latest customer orders and statuses</p>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <select class="form-select form-select-sm" id="statusFilter" style="width: 140px; background-color: var(--input-bg); color: var(--text-main); border-color: var(--border-color);">
+                  <option value="all">All Statuses</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Failed">Failed</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="table-responsive">
+              <table class="table table-modern" id="ordersTable">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                  <!-- Populated by JavaScript -->
+                </tbody>
+              </table>
+            </div>
+            
+            <!-- Table Footer Pagination -->
+            <div class="p-3 border-top d-flex justify-content-between align-items-center" style="border-color: var(--border-color) !important;">
+              <span class="small text-muted" id="showingCount">Showing 5 of 24 records</span>
+              <ul class="pagination pagination-sm mb-0">
+                <li class="page-item disabled"><a class="page-link" href="#">Prev</a></li>
+                <li class="page-item active"><a class="page-link" href="#" style="background-color: var(--primary-teal); border-color: var(--primary-teal); color: #fff;">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity Feed Widget -->
+        <div class="col-12 col-xl-4">
+          <div class="card card-custom p-3 p-md-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h6 class="fw-bold text-emphasis mb-0">Recent Activity</h6>
+              <a href="#" class="small text-decoration-none fw-medium" style="color: var(--primary-teal);">View log</a>
+            </div>
+
+            <div class="d-flex flex-column gap-3 mt-2">
+              <!-- Item 1 -->
+              <div class="d-flex gap-3 align-items-start">
+                <div class="avatar-initials bg-teal-soft" style="color: var(--primary-teal);">
+                  <i class="bi bi-box-seam"></i>
+                </div>
+                <div>
+                  <p class="small text-emphasis mb-0"><span class="fw-bold">Warehouse #2</span> added 50 units of Wireless Ergonomic Keyboards.</p>
+                  <small class="text-muted">12 minutes ago</small>
+                </div>
+              </div>
+
+              <!-- Item 2 -->
+              <div class="d-flex gap-3 align-items-start">
+                <div class="avatar-initials" style="background-color: rgba(16, 185, 129, 0.12); color: #10b981;">
+                  <i class="bi bi-credit-card"></i>
+                </div>
+                <div>
+                  <p class="small text-emphasis mb-0"><span class="fw-bold">Stripe Payout</span> of $14,290.00 was successfully processed.</p>
+                  <small class="text-muted">1 hour ago</small>
+                </div>
+              </div>
+
+              <!-- Item 3 -->
+              <div class="d-flex gap-3 align-items-start">
+                <div class="avatar-initials" style="background-color: rgba(239, 68, 68, 0.12); color: #ef4444;">
+                  <i class="bi bi-shield-exclamation"></i>
+                </div>
+                <div>
+                  <p class="small text-emphasis mb-0"><span class="fw-bold">Security Alert</span>: Multiple failed logins from IP 192.168.1.104.</p>
+                  <small class="text-muted">3 hours ago</small>
+                </div>
+              </div>
+
+              <!-- Item 4 -->
+              <div class="d-flex gap-3 align-items-start">
+                <div class="avatar-initials" style="background-color: rgba(14, 165, 233, 0.12); color: #0284c7;">
+                  <i class="bi bi-person-check"></i>
+                </div>
+                <div>
+                  <p class="small text-emphasis mb-0"><span class="fw-bold">Marcus Vance</span> completed account verification.</p>
+                  <small class="text-muted">5 hours ago</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Status Box -->
+            <div class="p-3 mt-4 rounded-3 border" style="background-color: var(--input-bg); border-color: var(--border-color) !important;">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="small fw-bold text-emphasis">Cloud Storage Usage</span>
+                <span class="small text-muted fw-semibold">74%</span>
+              </div>
+              <div class="progress" style="height: 6px;">
+                <div class="progress-bar" role="progressbar" style="width: 74%; background-color: var(--primary-teal);" aria-valuenow="74" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto p-3 text-center text-muted small bg-white border-top">
+      &copy; 2026 AuraAdmin UI &bull; Crafted with Bootstrap 5 and modern Teal design standards.
+    </footer>
+
+  </div>
+
+  <!-- Order Details Modal -->
+  <div class="modal fade" id="orderModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header border-bottom-0 pb-0">
+          <h5 class="modal-title fw-bold" id="modalTitle">Order Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body py-3" id="modalBody">
+          <!-- Populated dynamically -->
+        </div>
+        <div class="modal-footer border-top-0 pt-0">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-teal" id="modalActionBtn">Print Receipt</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    // --- Sample Data ---
+    const initialOrders = [
+      { id: "ORD-9281", customer: "Sarah Jenkins", email: "sarah.j@gmail.com", date: "Nov 02, 2026", amount: "$349.00", status: "Completed" },
+      { id: "ORD-9280", customer: "Liam Gallagher", email: "liam.g@outlook.com", date: "Nov 02, 2026", amount: "$120.50", status: "Pending" },
+      { id: "ORD-9279", customer: "Amara Okonjo", email: "amara.o@techcorp.io", date: "Nov 01, 2026", amount: "$1,240.00", status: "Completed" },
+      { id: "ORD-9278", customer: "Carlos Santana", email: "carlos.s@gmail.com", date: "Nov 01, 2026", amount: "$89.99", status: "Failed" },
+      { id: "ORD-9277", customer: "Emily Watson", email: "emily.w@design.net", date: "Oct 31, 2026", amount: "$450.00", status: "Completed" },
+      { id: "ORD-9276", customer: "David Miller", email: "dmiller@alpha.org", date: "Oct 30, 2026", amount: "$210.00", status: "Pending" }
+    ];
+
+    let ordersData = [...initialOrders];
+
+    // --- DOM Elements ---
+    const sidebarWrapper = document.getElementById('sidebar-wrapper');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+    const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+    const ordersTableBody = document.getElementById('ordersTableBody');
+    const statusFilter = document.getElementById('statusFilter');
+    const globalSearch = document.getElementById('globalSearch');
+    const exportBtn = document.getElementById('exportBtn');
+    const orderModal = new bootstrap.Modal(document.getElementById('orderModal'));
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+
+    // --- Theme Management (Light / Dark) ---
+    function getStoredTheme() {
+      return localStorage.getItem('theme');
+    }
+
+    function getPreferredTheme() {
+      const stored = getStoredTheme();
+      if (stored) return stored;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-bs-theme', theme);
+      if (theme === 'dark') {
+        themeIcon.classList.remove('bi-moon-stars');
+        themeIcon.classList.add('bi-sun');
+        themeToggleBtn.setAttribute('title', 'Switch to Light Mode');
+      } else {
+        themeIcon.classList.remove('bi-sun');
+        themeIcon.classList.add('bi-moon-stars');
+        themeToggleBtn.setAttribute('title', 'Switch to Dark Mode');
+      }
+      localStorage.setItem('theme', theme);
+      updateChartsTheme(theme);
+    }
+
+    // Toggle theme button click listener
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-bs-theme') || 'light';
+      setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    });
+
+    // Listen for OS theme preference changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      if (!getStoredTheme()) {
+        setTheme(getPreferredTheme());
+      }
+    });
+
+    // --- Sidebar Toggle Logic ---
+    function toggleSidebar() {
+      if (window.innerWidth < 992) {
+        document.body.classList.toggle('sidebar-mobile-show');
+      } else {
+        document.body.classList.toggle('sidebar-collapsed');
+      }
+    }
+
+    sidebarToggle.addEventListener('click', toggleSidebar);
+    if (sidebarCloseBtn) sidebarCloseBtn.addEventListener('click', toggleSidebar);
+    if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', toggleSidebar);
+
+    // --- Render Orders Table ---
+    function renderOrders(orders) {
+      ordersTableBody.innerHTML = '';
+      
+      if (orders.length === 0) {
+        ordersTableBody.innerHTML = `
+          <tr>
+            <td colspan="6" class="text-center py-4 text-muted">
+              <i class="bi bi-inbox fs-2 d-block mb-1"></i>
+              No orders found matching criteria.
+            </td>
+          </tr>`;
+        return;
+      }
+
+      orders.forEach(order => {
+        let badgeClass = 'badge-success-soft';
+        if (order.status === 'Pending') badgeClass = 'badge-warning-soft';
+        if (order.status === 'Failed') badgeClass = 'badge-danger-soft';
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="fw-semibold text-emphasis">${order.id}</td>
+          <td>
+            <div class="fw-medium text-emphasis">${order.customer}</div>
+            <div class="text-muted small">${order.email}</div>
+          </td>
+          <td class="text-muted">${order.date}</td>
+          <td class="fw-bold">${order.amount}</td>
+          <td><span class="stat-badge ${badgeClass}">${order.status}</span></td>
+          <td class="text-end">
+            <button class="btn btn-sm btn-outline-secondary view-order-btn" data-id="${order.id}">
+              <i class="bi bi-eye"></i> View
+            </button>
+          </td>
+        `;
+        ordersTableBody.appendChild(row);
+      });
+
+      // Attach view click listeners
+      document.querySelectorAll('.view-order-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const id = e.currentTarget.getAttribute('data-id');
+          openOrderDetails(id);
+        });
+      });
+    }
+
+    // Modal Details Viewer
+    function openOrderDetails(orderId) {
+      const order = ordersData.find(o => o.id === orderId);
+      if (!order) return;
+
+      document.getElementById('modalTitle').textContent = `Order Details: ${order.id}`;
+      document.getElementById('modalBody').innerHTML = `
+        <div class="p-3 rounded-3 mb-3" style="background-color: var(--input-bg); border: 1px solid var(--border-color);">
+          <div class="row g-2">
+            <div class="col-6"><span class="text-muted small">Customer:</span><p class="mb-0 fw-semibold">${order.customer}</p></div>
+            <div class="col-6"><span class="text-muted small">Date:</span><p class="mb-0 fw-semibold">${order.date}</p></div>
+            <div class="col-6"><span class="text-muted small">Total:</span><p class="mb-0 fw-bold" style="color: var(--primary-teal);">${order.amount}</p></div>
+            <div class="col-6"><span class="text-muted small">Status:</span><p class="mb-0 fw-semibold">${order.status}</p></div>
+          </div>
+        </div>
+        <p class="small text-muted mb-0">Delivery address confirmed and tracking updates have been dispatched to ${order.email}.</p>
+      `;
+      orderModal.show();
+    }
+
+    // Filter Logic
+    function applyFilters() {
+      const selectedStatus = statusFilter.value;
+      const query = globalSearch.value.trim().toLowerCase();
+
+      let filtered = ordersData.filter(item => {
+        const matchesStatus = (selectedStatus === 'all') || (item.status === selectedStatus);
+        const matchesQuery = 
+          item.customer.toLowerCase().includes(query) ||
+          item.id.toLowerCase().includes(query) ||
+          item.email.toLowerCase().includes(query);
+
+        return matchesStatus && matchesQuery;
+      });
+
+      renderOrders(filtered);
+    }
+
+    statusFilter.addEventListener('change', applyFilters);
+    globalSearch.addEventListener('input', applyFilters);
+
+    // Export Feedback Simulation
+    exportBtn.addEventListener('click', () => {
+      exportBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Generating...';
+      exportBtn.disabled = true;
+
+      setTimeout(() => {
+        exportBtn.innerHTML = '<i class="bi bi-check2"></i> Downloaded';
+        setTimeout(() => {
+          exportBtn.innerHTML = '<i class="bi bi-download"></i> <span>Export Report</span>';
+          exportBtn.disabled = false;
+        }, 1500);
+      }, 1000);
+    });
+
+    // Timeframe Buttons Simulation
+    const timeframeBtns = [document.getElementById('btn7D'), document.getElementById('btn30D'), document.getElementById('btn1Y')];
+    timeframeBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        timeframeBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Fluctuate charts
+        revenueChart.data.datasets[0].data = revenueChart.data.datasets[0].data.map(val => Math.floor(val * (0.85 + Math.random() * 0.3)));
+        revenueChart.update();
+      });
+    });
+
+    // --- Chart.js Implementations ---
+    let revenueChart, channelChart;
+
+    function initCharts(theme) {
+      const isDark = theme === 'dark';
+      const gridColor = isDark ? '#334155' : '#f1f5f9';
+      const tickColor = isDark ? '#94a3b8' : '#64748b';
+      const primaryTeal = isDark ? '#2dd4bf' : '#0d9488';
+
+      // 1. Revenue Chart
+      const ctxRev = document.getElementById('revenueChart').getContext('2d');
+      const tealGradient = ctxRev.createLinearGradient(0, 0, 0, 300);
+      tealGradient.addColorStop(0, isDark ? 'rgba(45, 212, 191, 0.35)' : 'rgba(13, 148, 136, 0.35)');
+      tealGradient.addColorStop(1, 'rgba(13, 148, 136, 0.0)');
+
+      revenueChart = new Chart(ctxRev, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          datasets: [
+            {
+              label: 'Revenue ($)',
+              data: [32000, 41000, 38500, 52000, 48000, 64000, 59000, 71000, 68000, 84392, 79000, 91000],
+              borderColor: primaryTeal,
+              backgroundColor: tealGradient,
+              borderWidth: 2.5,
+              fill: true,
+              tension: 0.35,
+              pointBackgroundColor: isDark ? '#1e293b' : '#ffffff',
+              pointBorderColor: primaryTeal,
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              pointHoverRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: isDark ? '#0f172a' : '#1e293b',
+              titleColor: '#f8fafc',
+              bodyColor: '#f8fafc',
+              borderColor: isDark ? '#334155' : '#e2e8f0',
+              borderWidth: 1,
+              titleFont: { size: 13, family: 'Plus Jakarta Sans' },
+              bodyFont: { size: 12, family: 'Plus Jakarta Sans' },
+              padding: 10,
+              displayColors: false,
+              callbacks: {
+                label: function(context) {
+                  return '$' + context.parsed.y.toLocaleString();
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              grid: { color: gridColor },
+              ticks: {
+                color: tickColor,
+                callback: function(value) { return '$' + (value / 1000) + 'k'; }
+              }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { color: tickColor }
+            }
+          }
+        }
+      });
+
+      // 2. Channel Traffic Doughnut Chart
+      const ctxChan = document.getElementById('channelChart').getContext('2d');
+      channelChart = new Chart(ctxChan, {
+        type: 'doughnut',
+        data: {
+          labels: ['Direct Store', 'Organic Search', 'Social Media'],
+          datasets: [{
+            data: [52, 28, 20],
+            backgroundColor: isDark ? ['#2dd4bf', '#14b8a6', '#0f766e'] : ['#0d9488', '#14b8a6', '#99f6e4'],
+            hoverOffset: 6,
+            borderWidth: 2,
+            borderColor: isDark ? '#1e293b' : '#ffffff'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '72%',
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: isDark ? '#0f172a' : '#1e293b',
+              borderColor: isDark ? '#334155' : '#e2e8f0',
+              borderWidth: 1,
+              callbacks: {
+                label: function(context) {
+                  return ` ${context.label}: ${context.raw}%`;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Dynamic Chart Theme Adaptation
+    function updateChartsTheme(theme) {
+      if (!revenueChart || !channelChart) return;
+
+      const isDark = theme === 'dark';
+      const gridColor = isDark ? '#334155' : '#f1f5f9';
+      const tickColor = isDark ? '#94a3b8' : '#64748b';
+      const primaryTeal = isDark ? '#2dd4bf' : '#0d9488';
+
+      // Update Revenue Chart
+      const ctxRev = document.getElementById('revenueChart').getContext('2d');
+      const tealGradient = ctxRev.createLinearGradient(0, 0, 0, 300);
+      tealGradient.addColorStop(0, isDark ? 'rgba(45, 212, 191, 0.35)' : 'rgba(13, 148, 136, 0.35)');
+      tealGradient.addColorStop(1, 'rgba(13, 148, 136, 0.0)');
+
+      revenueChart.data.datasets[0].borderColor = primaryTeal;
+      revenueChart.data.datasets[0].backgroundColor = tealGradient;
+      revenueChart.data.datasets[0].pointBackgroundColor = isDark ? '#1e293b' : '#ffffff';
+      revenueChart.data.datasets[0].pointBorderColor = primaryTeal;
+      revenueChart.options.scales.y.grid.color = gridColor;
+      revenueChart.options.scales.y.ticks.color = tickColor;
+      revenueChart.options.scales.x.ticks.color = tickColor;
+      revenueChart.options.plugins.tooltip.backgroundColor = isDark ? '#0f172a' : '#1e293b';
+      revenueChart.options.plugins.tooltip.borderColor = isDark ? '#334155' : '#e2e8f0';
+      revenueChart.update();
+
+      // Update Channel Chart
+      channelChart.data.datasets[0].backgroundColor = isDark ? ['#2dd4bf', '#14b8a6', '#0f766e'] : ['#0d9488', '#14b8a6', '#99f6e4'];
+      channelChart.data.datasets[0].borderColor = isDark ? '#1e293b' : '#ffffff';
+      channelChart.options.plugins.tooltip.backgroundColor = isDark ? '#0f172a' : '#1e293b';
+      channelChart.options.plugins.tooltip.borderColor = isDark ? '#334155' : '#e2e8f0';
+      channelChart.update();
+    }
+
+    // Refresh Channel event simulation
+    document.getElementById('refreshChannels').addEventListener('click', () => {
+      channelChart.data.datasets[0].data = [
+        Math.floor(40 + Math.random() * 20),
+        Math.floor(20 + Math.random() * 15),
+        Math.floor(10 + Math.random() * 15)
+      ];
+      channelChart.update();
+    });
+
+    // Initialize on window load
+    window.addEventListener('load', () => {
+      const initialTheme = getPreferredTheme();
+      setTheme(initialTheme);
+      renderOrders(ordersData);
+      initCharts(initialTheme);
+    });
+  </script>
+</body>
+</html>

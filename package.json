@@ -1,0 +1,28 @@
+{
+  "name": "doc_f",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zeckie1/doc_f.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Zeckie1/doc_f/issues"
+  },
+  "homepage": "https://github.com/Zeckie1/doc_f#readme",
+  "dependencies": {
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "mysql2": "^3.24.4",
+    "nodemon": "^3.1.14",
+    "pg": "^8.23.0"
+  }
+}
